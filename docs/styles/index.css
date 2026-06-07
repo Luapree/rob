@@ -32,7 +32,7 @@ button {
     border-bottom-width: 4px;
     border-radius: 1em;
     background: #ffffff66;
-    transition: width 0.1s cubic-bezier(0.25, 1.75, 0.5, 1);
+    transition: width 0.125s cubic-bezier(0.25, 1.75, 0.5, 1);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
