@@ -7,12 +7,11 @@ Share opinions, laugh together, and level up your server with a bot that can tal
 
 # Setup guide
 1. Invite Rob to your server.
-2. Create the `• RobAdmin` role and assign it to yourself and other people you want changing Rob's settings.
+2. Optionally, you can create the `• RobAdmin` role and assign it to non-admin people you want changing Rob's settings.
 3. Take a moment to use the `#!option <option> <value>` command to change Rob's settings to your liking. Available options and what they do:
     - `randomlyMessage` (values: **enable/disable**) -- Allows the bot to send an unprompted message at a random time when the chat is inactive. - Default is **disable**
     - `responseFrequency` (values: **a number from 1-100**, default **4**) -- Controls the chances of Rob responding to a message without being pinged to do so (a higher number means more often, recommended values are 0-4 if your server isn't Rob-centric) - Default is **4**
     - `listen` (values: **enable/disable**) -- Turns the bot on when enabled or off when disabled. - Default is **enable**
-    - `model` (values: **available model names on [groqcloud](https://console.groq.com/docs/models)**) -- Change the AI model Rob uses in your server for responses. - Default is **llama-3.1-8b-instant**
     - `dumb` (values: **enable/disable**) -- Controls whether to generate messages locally instead of using groqcloud's API, which may produce less coherent responses and may not use a full-fat AI model all the time. **This is currently an UNSTABLE feature as it may make the bot faster, slower, or not work at all.** - Default is **disable**
     - `mailChannel` (values: **channel name starting with #**) -- Sets the channel to use for receiving letters from other servers. - Auto-detects your general channel by default.
 4. Send your first message to Rob by @mentioning him!
@@ -27,3 +26,25 @@ Share opinions, laugh together, and level up your server with a bot that can tal
 ## Misc:
 - `#!help` - Lists all options that can be modified in your server.
 - `#!about` - Shows bot credits and interaction stats.
+
+# Development setup
+1. Install Obun
+```bash
+git clone https://github.com/Dogo6647/obun.git
+cd obun
+./install.sh
+```
+
+2. Clone this repo and install requirements
+```bash
+git clone https://github.com/Dogo6647/rob.git
+cd rob
+pip install -r requirements.txt
+```
+
+3. Edit .env.example with your preferred text editor and rename it to .env
+
+4. Run the bot
+```
+obun -w
+```
