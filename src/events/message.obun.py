@@ -1,0 +1,59 @@
+@client.event
+async def on_message(message):
+    if message.author == client.user:
+        return # Ignore itself lol
+    
+    if message.guild:
+        guild_id = message.guild.id
+        config = load_config(guild_id)
+        guild_message_histories[guild_id].append({"role": "user", "content": f"{message.author.name} said: {message.content}"})
+        history = guild_message_histories[guild_id]
+        if not message.channel.permissions_for(message.guild.me).send_messages:
+            return
+    else:
+        user_id = message.author.id
+        userconfig = "userland"
+        config = load_config(userconfig)
+        dm_message_histories[user_id].append({"role": "user", "content": message.content})
+        history = dm_message_histories[user_id]
+    
+    # --- BOT COMMANDS ---
+    #:section src/commands/option.obun.py
+    #:section src/commands/help.obun.py
+    #:section src/commands/about.obun.py
+    #:section src/commands/eval.obun.py
+    #:section src/commands/address.obun.py
+    #:section src/commands/trustuntrust.obun.py
+    #:section src/commands/send.obun.py
+    #:section src/commands/phonebook.obun.py
+    # ------------------
+    
+    if not config["listen"]:
+        return
+    
+    should_respond = message.mention_everyone or client.user.mentioned_in(message) or random.random() < (config["responseFrequency"] / 100)
+    
+    if should_respond:
+        async with message.channel.typing():
+            num_responses = random.choices([1, 2, 3], weights=[75, 20, 5], k=1)[0]
+
+            for _ in range(num_responses):
+                if random.random() < tin_can_chance:
+                    response = "*tin can noises*"
+                else:
+                    response = await generate_response(
+                        "respond",
+                        history,
+                        config.get("model"),
+                        config.get("dumb"),
+                        f"the {message.guild.name} server" if message.guild else "DMs"
+                    )
+
+                history.append({"role": "assistant", "content": response})
+                await message.channel.send(response)
+
+                if num_responses > 1:
+                    await asyncio.sleep(random.uniform(1, 3))
+
+        if message.guild:
+            guild_daily_stats[message.guild.id] += num_responses
